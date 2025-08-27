@@ -10,7 +10,7 @@ SECRET_KEY = '94efhhf83h8883fv9023bvdkw' #May need to move elsewhere?
 ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
-oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/login')
 
 def authenticate_user(username: str, password: str, db):
     user = db.query(User).where(User.username == username).first()
