@@ -9,14 +9,14 @@ app.include_router(routes.auth_router)
 app.include_router(routes.posts_router)
 
 origins = [
-    "http://localhost:5173/",
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allowed_origins=origins,
-    allowed_methods=['*'],
-    allowed_headers=['*'],
+    allow_origins=origins,
+    allow_methods=['*'],
+    allow_headers=['*'],
 )
 
 Base.metadata.create_all(bind=engine)

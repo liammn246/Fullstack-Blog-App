@@ -1,9 +1,9 @@
 from fastapi import Depends, APIRouter, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import Annotated
+from typing import Annotated, List
 from backend.database import get_db
 from backend.models import User,Post
-from backend.schema import CreatePost
+from backend.schema import CreatePost, PostResponse
 from backend.utils.security import get_current_user
 
 posts_router = APIRouter(
@@ -14,7 +14,7 @@ posts_router = APIRouter(
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[Session, Depends(get_current_user)]
 
-@posts_router.get('/all')
+@posts_router.get('/all', response_model=List[PostResponse])
 def all_posts(db: db_dependency):
     posts = db.query(Post).all()
     return posts
