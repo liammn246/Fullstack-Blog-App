@@ -10,9 +10,23 @@ const login = async (formdata) => {
     localStorage.setItem('token', token)
     window.location.href = "/"
   } catch(error) {
-    console.log('Error bruh') //Let user know didnt work
+    console.log('Error')
   }
 }
+const signUp = async (formdata) => {
+  try {
+    const username = formdata.get('username')
+    const password = formdata.get('password')
+    const response = await api.post(
+      '/auth/user',
+      { username, password }
+    );
+    console.log(response.data.message);
+    window.location.href = "/";
+  } catch (error) {
+    console.log('Error', error);
+  }
+};
 
 function LoginApp() {
   return (
@@ -36,7 +50,7 @@ function LoginApp() {
       </form>
     </div>
     <div id="signup-block">
-    <form className="form" id="signup-form" action={login}>
+    <form className="form" id="signup-form" action={signUp}>
       <h1>Sign up</h1>
       <div id="signup-inputs">
         <div className="input-field">
