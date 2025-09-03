@@ -23,6 +23,8 @@ def all_posts(db: db_dependency):
 def create_post(data: CreatePost, db: db_dependency, user: user_dependency):
     if db.query(User).where(User.username == user['username']).one_or_none() == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    if len(data.content) == 0:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Length cannot be zero")
     new_post = Post(content=data.content, user_id=user['id'])
     db.add(new_post)
     db.commit()

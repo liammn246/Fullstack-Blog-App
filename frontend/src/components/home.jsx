@@ -24,10 +24,6 @@ function HomeApp() {
     }
 
     const createPost = async (formdata) => {
-        if (formdata.get('content').length == 0) {
-            console.log('Too short, handle this')
-            return //I SHOULD INSTEAD HANDLE THIS INSIDE THE BACKEND
-        }
         if (!hasToken()) {
             window.location.href = "/login"
             return
@@ -35,9 +31,14 @@ function HomeApp() {
         let token = localStorage.getItem('token')
         try {
           const response = await api.post('/posts', {content:formdata.get('content')}, {headers: {Authorization:`Bearer ${token}`}})
-          await fetchPosts()
+          if (response.status == 200) {
+            await fetchPosts()
+          }
           } catch(error) {
-          console.log("Could not post") //Error handle here if token is expired
+            if (error.response.status == 401) {
+                window.location.href = "/login"
+            }
+          console.log("Could not post")
         }
       }
 
@@ -60,7 +61,7 @@ function HomeApp() {
             <form id="post-form" action={createPost}>
                 <div id="post-inputs">
                     <div className="input-field-post">
-                        <input id="post-content-input" name="content"/>
+                        <textarea id="post-content-input" name="content"/>
                     </div>
                 </div>
                 <button type="submit">Submit</button>

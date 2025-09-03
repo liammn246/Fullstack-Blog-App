@@ -10,14 +10,18 @@ const login = async (formdata) => {
     localStorage.setItem('token', token)
     window.location.href = "/"
   } catch(error) {
-    console.log('Error bruh')
+    console.log('Error bruh') //Let user know didnt work
   }
 }
 
 function LoginApp() {
   return (
+    <div id="login-app">
+      <h1>MyBlog</h1>
+      <div id="input-area">
     <div id="login-block">
-      <form id="login-form" action={login}>
+      <form className="form" id="login-form" action={login}>
+        <h1>Login</h1>
         <div id="login-inputs">
           <div className="input-field">
             <p>Username:</p>
@@ -25,12 +29,30 @@ function LoginApp() {
           </div>
           <div className="input-field">
             <p>Password:</p>
-            <input name="password"/>
+            <input type="password" name="password"/>
           </div>
         </div>
         <button type="submit">Submit</button>
       </form>
     </div>
+    <div id="signup-block">
+    <form className="form" id="signup-form" action={login}>
+      <h1>Sign up</h1>
+      <div id="signup-inputs">
+        <div className="input-field">
+          <p>Username:</p>
+          <input name="username"/>
+        </div>
+        <div className="input-field">
+          <p>Password:</p>
+          <input type="password" name="password"/>
+        </div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    </div>
+  </div>
+  </div>
   )
 }
 

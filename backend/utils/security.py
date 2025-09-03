@@ -1,12 +1,15 @@
-from backend.models import Post, User
+from backend.models import User
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from datetime import timedelta, datetime
 from jose import jwt, JWTError
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
+from dotenv import load_dotenv
+import os
 
-SECRET_KEY = '94efhhf83h8883fv9023bvdkw' #May need to move elsewhere?
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
